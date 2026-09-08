@@ -3,37 +3,14 @@
   "themeCollection": {
     "baseTheme": {
       "name": "CY24SU10",
-      "reportVersionAtImport": {
-        "visual": "2.6.0",
-        "report": "3.1.0",
-        "page": "2.3.0"
-      },
+      "reportVersionAtImport": "5.59",
       "type": "SharedResources"
     },
     "customTheme": {
       "name": "corporate.json",
-      "reportVersionAtImport": {
-        "visual": "2.6.0",
-        "report": "3.1.0",
-        "page": "2.3.0"
-      },
+      "reportVersionAtImport": "5.59",
       "type": "RegisteredResources"
     }
-  },
-  "objects": {
-    "section": [
-      {
-        "properties": {
-          "verticalAlign": {
-            "expr": {
-              "Literal": {
-                "Value": "'Top'"
-              }
-            }
-          }
-        }
-      }
-    ]
   },
   "settings": {
     "useStylableVisualContainerHeader": true,
