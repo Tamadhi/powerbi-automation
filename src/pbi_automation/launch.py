@@ -35,15 +35,21 @@ def launch(
 
     if commit:
         try:
-            commit_and_push(
+            git_result = commit_and_push(
                 repo_root,
                 [result.output_dir],
                 f"Generate {result.spec.name} PBIP semantic model and report.",
                 push=push,
             )
-            lines.append("Committed generated workspace artifacts.")
+            if git_result.committed:
+                lines.append("Committed generated workspace artifacts.")
+            else:
+                lines.append("No git changes to commit.")
             if push:
-                lines.append("Pushed to the existing git remote.")
+                if git_result.pushed:
+                    lines.append("Pushed to the existing git remote.")
+                else:
+                    lines.append("Skipped push; nothing new was committed.")
         except GitError as exc:
             lines.append(f"Git step skipped/failed: {exc}")
     elif push:

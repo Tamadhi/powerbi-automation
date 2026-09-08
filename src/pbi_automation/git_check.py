@@ -24,6 +24,13 @@ class GitInfo:
         return self.inside_work_tree and bool(self.remote_url)
 
 
+@dataclass
+class GitPublishResult:
+    info: GitInfo
+    committed: bool
+    pushed: bool
+
+
 def _run(args: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(args, cwd=cwd, text=True, capture_output=True, check=False)
 
@@ -83,7 +90,7 @@ def format_git_status(info: GitInfo) -> str:
     return "\n".join(lines)
 
 
-def commit_and_push(repo_root: Path, paths: list[Path], message: str, *, push: bool) -> GitInfo:
+def commit_and_push(repo_root: Path, paths: list[Path], message: str, *, push: bool) -> GitPublishResult:
     info = inspect_git(repo_root)
     if not info.inside_work_tree:
         raise GitError("Not a git repository.")
@@ -91,11 +98,13 @@ def commit_and_push(repo_root: Path, paths: list[Path], message: str, *, push: b
     _git(["add", "--", *rels], repo_root)
     status = _git(["status", "--porcelain"], repo_root)
     if not status:
-        return inspect_git(repo_root)
+        return GitPublishResult(info=inspect_git(repo_root), committed=False, pushed=False)
     _git(["commit", "-m", message], repo_root)
+    pushed = False
     if push:
         if not info.remote_name:
             raise GitError("No git remote configured; cannot push.")
         branch = info.branch or "HEAD"
         _git(["push", "-u", info.remote_name, branch], repo_root)
-    return inspect_git(repo_root)
+        pushed = True
+    return GitPublishResult(info=inspect_git(repo_root), committed=True, pushed=pushed)

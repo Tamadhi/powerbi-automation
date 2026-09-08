@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from pbi_automation.io_util import write_json
-from pbi_automation.models import DashboardSpec, FieldRef, PageSpec
+from pbi_automation.models import DashboardSpec, FieldRef, PageSpec, first_page
 
 CHART_TYPES = {
     "barChart",
@@ -99,7 +99,7 @@ def rebind_visual(payload: dict[str, Any], page: PageSpec) -> None:
 
 
 def rebind_report(report_dir: Path, spec: DashboardSpec) -> int:
-    page = spec.pages[0]
+    page = first_page(spec)
     updated = 0
     visuals_root = report_dir / "definition" / "pages"
     if not visuals_root.exists():

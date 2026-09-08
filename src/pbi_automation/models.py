@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -80,6 +80,19 @@ class DashboardSpec:
         return f"{self.name}.Report"
 
 
+class ConfigError(ValueError):
+    pass
+
+
+def first_page(spec: DashboardSpec) -> PageSpec:
+    if not spec.pages:
+        raise ConfigError(
+            f"Dashboard config {spec.config_path} has no pages. "
+            "Add at least one page under 'pages:'."
+        )
+    return spec.pages[0]
+
+
 def load_spec(config_path: Path, repo_root: Path) -> DashboardSpec:
     raw: dict[str, Any] = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     source = SourceSpec(type=raw["source"]["type"], url=raw["source"]["url"].rstrip("/"))
@@ -93,8 +106,14 @@ def load_spec(config_path: Path, repo_root: Path) -> DashboardSpec:
         if not template.is_absolute():
             template = repo_root / template
 
+    pages_raw = raw.get("pages")
+    if not isinstance(pages_raw, dict) or not pages_raw:
+        raise ConfigError(
+            f"{config_path} has no pages. Add at least one page under 'pages:'."
+        )
+
     pages: list[PageSpec] = []
-    for key, page in raw["pages"].items():
+    for key, page in pages_raw.items():
         chart = page["chart"]
         pages.append(
             PageSpec(

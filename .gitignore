@@ -8,6 +8,9 @@ build/
 .env
 .python-version
 
+# Accidental nested clone of the GitHub repo
+/powerbi-automation/
+
 # Power BI Desktop local caches — never commit
 **/.pbi/localSettings.json
 **/.pbi/cache.abf

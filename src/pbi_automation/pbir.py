@@ -171,7 +171,7 @@ def _apply_theme(report_json: dict[str, Any], theme_file_name: str) -> dict[str,
 
 
 def _builtin_report(spec: DashboardSpec, report_dir: Path, theme_file_name: str) -> None:
-    page = spec.pages[0]
+    page = first_page(spec)
     page_name = visual_name(spec.name, page.key, "page")
     definition = report_dir / "definition"
     page_dir = definition / "pages" / page_name
