@@ -1,0 +1,58 @@
+table Order_Details
+    lineageTag: 812e3524-75cf-5451-bd72-0a7e1bca5a0d
+
+    partition Order_Details = m
+        mode: import
+        source =
+            let
+                Source = OData.Feed("https://services.odata.org/V4/Northwind/Northwind.svc/", null, [Implementation="2.0"]),
+                Navigation = Source{[Name="Order_Details",Signature="table"]}[Data]
+            in
+                Navigation
+
+    column OrderID
+        dataType: int64
+        formatString: '0'
+        sourceColumn: OrderID
+        summarizeBy: none
+        lineageTag: f8bbb70a-3789-5604-88bb-0e826726ed06
+
+    column ProductID
+        dataType: int64
+        formatString: '0'
+        sourceColumn: ProductID
+        summarizeBy: none
+        lineageTag: 8016179b-f045-516c-a1fd-24fa8b5fca50
+
+    column UnitPrice
+        dataType: double
+        formatString: '$#,0.00'
+        sourceColumn: UnitPrice
+        summarizeBy: none
+        lineageTag: af72e1f0-4dd7-5ad5-a37d-eaf18e29c18b
+
+    column Quantity
+        dataType: int64
+        formatString: '0'
+        sourceColumn: Quantity
+        summarizeBy: sum
+        lineageTag: 0184b7fe-260a-539e-8921-20cd458a7a9f
+
+    column Discount
+        dataType: double
+        formatString: '0%'
+        sourceColumn: Discount
+        summarizeBy: none
+        lineageTag: fee404af-4e0c-546d-9e4f-2aec6d0c4113
+
+    measure 'Total Sales' = SUMX('Order_Details', 'Order_Details'[UnitPrice] * 'Order_Details'[Quantity] * (1 - 'Order_Details'[Discount]))
+        formatString: '$#,0.00'
+        lineageTag: 2802f2c8-5f47-5b34-9668-3fd43ae4adc6
+
+    measure 'Order Count' = DISTINCTCOUNT(Orders[OrderID])
+        formatString: '#,0'
+        lineageTag: 4909fc7f-9303-51ec-86e2-a90a039cb9a4
+
+    measure 'Avg Order Value' = DIVIDE([Total Sales], [Order Count])
+        formatString: '$#,0.00'
+        lineageTag: e3115cc1-923b-582f-b5ca-16dffe13a058

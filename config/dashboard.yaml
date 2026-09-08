@@ -1,0 +1,28 @@
+name: NorthwindSales
+theme: templates/themes/corporate.json
+# Drop a PBIR folder here (or pass --template). Layout/visuals are copied;
+# cards/chart/table/slicer bindings below are applied onto that layout.
+template: templates/dashboard
+
+# Online source — nothing to download. Power BI refreshes it over HTTP.
+source:
+  type: odata
+  url: https://services.odata.org/V4/Northwind/Northwind.svc/
+
+pages:
+  overview:
+    title: Northwind Sales
+    cards:
+      - Order_Details.Total Sales
+      - Order_Details.Order Count
+      - Order_Details.Avg Order Value
+    chart:
+      visual: clusteredBarChart
+      x: Customers.Country
+      y: Order_Details.Total Sales
+    table:
+      - Orders.OrderID
+      - Customers.CompanyName
+      - Customers.Country
+      - Order_Details.Total Sales
+    slicer: Customers.Country

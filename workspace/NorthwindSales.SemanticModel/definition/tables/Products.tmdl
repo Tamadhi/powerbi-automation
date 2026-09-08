@@ -1,0 +1,33 @@
+table Products
+    lineageTag: c4285e9d-0f3c-5526-90b5-efbad676d6ab
+
+    partition Products = m
+        mode: import
+        source =
+            let
+                Source = OData.Feed("https://services.odata.org/V4/Northwind/Northwind.svc/", null, [Implementation="2.0"]),
+                Navigation = Source{[Name="Products",Signature="table"]}[Data]
+            in
+                Navigation
+
+    column ProductID
+        dataType: int64
+        formatString: '0'
+        isUnique
+        isKey
+        sourceColumn: ProductID
+        summarizeBy: none
+        lineageTag: cf09c34c-6cb4-5eec-b08b-a5e3ddeedff5
+
+    column ProductName
+        dataType: string
+        sourceColumn: ProductName
+        summarizeBy: none
+        lineageTag: 825553cc-19d8-502a-994e-0e38f94f57d2
+
+    column UnitPrice
+        dataType: double
+        formatString: '$#,0.00'
+        sourceColumn: UnitPrice
+        summarizeBy: sum
+        lineageTag: 7629ae77-a7bd-5f23-b96c-32314932d2a8

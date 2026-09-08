@@ -1,0 +1,19 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+.python-version
+
+# Power BI Desktop local caches — never commit
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
+*.pbix
+*.pbit
+
+.DS_Store
+Thumbs.db

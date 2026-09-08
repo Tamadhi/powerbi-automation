@@ -1,0 +1,46 @@
+table Orders
+    lineageTag: bce7039e-8def-5aeb-9837-d63047a83377
+
+    partition Orders = m
+        mode: import
+        source =
+            let
+                Source = OData.Feed("https://services.odata.org/V4/Northwind/Northwind.svc/", null, [Implementation="2.0"]),
+                Navigation = Source{[Name="Orders",Signature="table"]}[Data]
+            in
+                Navigation
+
+    column OrderID
+        dataType: int64
+        formatString: '0'
+        isUnique
+        isKey
+        sourceColumn: OrderID
+        summarizeBy: none
+        lineageTag: 93c544b6-6ad8-5e0f-89f5-f969d1da600b
+
+    column CustomerID
+        dataType: string
+        sourceColumn: CustomerID
+        summarizeBy: none
+        lineageTag: 8a97fad7-6d61-5115-b3ec-c8c7e7362b68
+
+    column OrderDate
+        dataType: dateTime
+        formatString: 'yyyy-mm-dd'
+        sourceColumn: OrderDate
+        summarizeBy: none
+        lineageTag: 870670d6-b08d-58cc-a9ba-df12c034cae8
+
+    column Freight
+        dataType: double
+        formatString: '$#,0.00'
+        sourceColumn: Freight
+        summarizeBy: sum
+        lineageTag: 2b4a22b2-14ad-582f-a91a-81b26b043242
+
+    column ShipCountry
+        dataType: string
+        sourceColumn: ShipCountry
+        summarizeBy: none
+        lineageTag: 8bf8de09-414a-5d91-93ac-0867c618cf39

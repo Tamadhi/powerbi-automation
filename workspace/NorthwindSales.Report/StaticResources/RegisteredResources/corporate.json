@@ -1,0 +1,57 @@
+{
+  "name": "Corporate",
+  "dataColors": [
+    "#0F4C81",
+    "#1B8A6B",
+    "#E8A317",
+    "#C44536",
+    "#5B7C99",
+    "#7B6B9B",
+    "#2A9D8F",
+    "#E76F51"
+  ],
+  "background": "#F4F7FA",
+  "foreground": "#0F2C4C",
+  "tableAccent": "#0F4C81",
+  "maximum": "#1B8A6B",
+  "minimum": "#C44536",
+  "null": "#94A3B8",
+  "textClasses": {
+    "label": {
+      "color": "#334155",
+      "fontSize": 10,
+      "fontFace": "Segoe UI"
+    },
+    "callout": {
+      "color": "#0F2C4C",
+      "fontSize": 28,
+      "fontFace": "Segoe UI",
+      "fontWeight": "bold"
+    },
+    "title": {
+      "color": "#0F2C4C",
+      "fontSize": 13,
+      "fontFace": "Segoe UI",
+      "fontWeight": "bold"
+    },
+    "header": {
+      "color": "#0F4C81",
+      "fontSize": 11,
+      "fontFace": "Segoe UI",
+      "fontWeight": "semibold"
+    },
+    "largeTitle": {
+      "color": "#0F2C4C",
+      "fontSize": 18,
+      "fontFace": "Segoe UI",
+      "fontWeight": "bold"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "fontFamily": [{ "value": "Segoe UI" }]
+      }
+    }
+  }
+}

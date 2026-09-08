@@ -1,0 +1,37 @@
+table Customers
+    lineageTag: 1989ba1b-4b78-5180-bae1-59118ae3f3f5
+
+    partition Customers = m
+        mode: import
+        source =
+            let
+                Source = OData.Feed("https://services.odata.org/V4/Northwind/Northwind.svc/", null, [Implementation="2.0"]),
+                Navigation = Source{[Name="Customers",Signature="table"]}[Data]
+            in
+                Navigation
+
+    column CustomerID
+        dataType: string
+        isUnique
+        isKey
+        sourceColumn: CustomerID
+        summarizeBy: none
+        lineageTag: c16bf0e2-57a5-5da0-af2c-6088a89d3dda
+
+    column CompanyName
+        dataType: string
+        sourceColumn: CompanyName
+        summarizeBy: none
+        lineageTag: e1f60cc0-02fc-5333-8ed2-f7aab7868268
+
+    column City
+        dataType: string
+        sourceColumn: City
+        summarizeBy: none
+        lineageTag: f0577086-c663-5017-8e74-56239bebab33
+
+    column Country
+        dataType: string
+        sourceColumn: Country
+        summarizeBy: none
+        lineageTag: b2be09ff-2a2f-5a53-b162-1006d4432d5f
