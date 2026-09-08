@@ -3,18 +3,15 @@ relationship Order_Details_Orders
     toCardinality: one
     fromColumn: Order_Details.OrderID
     toColumn: Orders.OrderID
-    lineageTag: 0a362a95-f0cf-5410-904d-93c03737c16e
 
 relationship Order_Details_Products
     fromCardinality: many
     toCardinality: one
     fromColumn: Order_Details.ProductID
     toColumn: Products.ProductID
-    lineageTag: 008451fc-e7b4-5340-868b-af9afae8433a
 
 relationship Orders_Customers
     fromCardinality: many
     toCardinality: one
     fromColumn: Orders.CustomerID
     toColumn: Customers.CustomerID
-    lineageTag: 8b7bdd69-0b52-56ee-bc5d-168922b8854e
